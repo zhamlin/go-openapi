@@ -6,9 +6,8 @@ import (
 	"path"
 	"testing"
 
-	"github.com/stretchr/testify/require"
-
 	"github.com/sv-tools/openapi"
+	"github.com/sv-tools/openapi/internal/require"
 )
 
 func TestValidator_ValidateSpec(t *testing.T) {

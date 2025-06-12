@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/stretchr/testify/require"
+	"github.com/sv-tools/openapi/internal/require"
 
 	"github.com/sv-tools/openapi"
 )

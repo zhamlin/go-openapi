@@ -4,9 +4,8 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/stretchr/testify/require"
-
 	"github.com/sv-tools/openapi"
+	"github.com/sv-tools/openapi/internal/require"
 )
 
 func TestSchema_Marshal_Unmarshal(t *testing.T) {

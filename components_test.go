@@ -3,9 +3,8 @@ package openapi_test
 import (
 	"testing"
 
-	"github.com/stretchr/testify/require"
-
 	"github.com/sv-tools/openapi"
+	"github.com/sv-tools/openapi/internal/require"
 )
 
 func TestComponents_Add(t *testing.T) {

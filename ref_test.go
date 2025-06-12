@@ -5,9 +5,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/stretchr/testify/require"
-
 	"github.com/sv-tools/openapi"
+	"github.com/sv-tools/openapi/internal/require"
 )
 
 type testRefOrSpec struct {
