@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
-
-	"gopkg.in/yaml.v3"
 )
 
 // Ref is a simple object to allow referencing other components in the OpenAPI document, internally and externally.
@@ -21,22 +19,22 @@ type Ref struct {
 	// REQUIRED.
 	// The reference identifier.
 	// This MUST be in the form of a URI.
-	Ref string `json:"$ref" yaml:"$ref"`
+	Ref string `json:"$ref"`
 	// A short summary which by default SHOULD override that of the referenced component.
 	// If the referenced object-type does not allow a summary field, then this field has no effect.
-	Summary string `json:"summary,omitempty" yaml:"summary,omitempty"`
+	Summary string `json:"summary,omitempty"`
 	// A description which by default SHOULD override that of the referenced component.
 	// CommonMark syntax MAY be used for rich text representation.
 	// If the referenced object-type does not allow a description field, then this field has no effect.
-	Description string `json:"description,omitempty" yaml:"description,omitempty"`
+	Description string `json:"description,omitempty"`
 }
 
 // RefOrSpec holds either Ref or any OpenAPI spec type.
 //
-// NOTE: The Ref object takes precedent over Spec if using json or yaml Marshal and Unmarshal functions.
+// NOTE: The Ref object takes precedent over Spec if using json Marshal and Unmarshal functions.
 type RefOrSpec[T any] struct {
-	Ref  *Ref `json:"-" yaml:"-"`
-	Spec *T   `json:"-" yaml:"-"`
+	Ref  *Ref `json:"-"`
+	Spec *T   `json:"-"`
 }
 
 // NewRefOrSpec creates an object of RefOrSpec type from given Ref or string or any form of Spec.
@@ -190,30 +188,6 @@ func (o *RefOrSpec[T]) UnmarshalJSON(data []byte) error {
 
 	o.Ref = nil
 	if err := json.Unmarshal(data, &o.Spec); err != nil {
-		return fmt.Errorf("%T: %w", o.Spec, err)
-	}
-	return nil
-}
-
-// MarshalYAML implements yaml.Marshaler interface.
-func (o *RefOrSpec[T]) MarshalYAML() (any, error) {
-	var v any
-	if o.Ref != nil {
-		v = o.Ref
-	} else {
-		v = o.Spec
-	}
-	return v, nil
-}
-
-// UnmarshalYAML implements yaml.Unmarshaler interface.
-func (o *RefOrSpec[T]) UnmarshalYAML(node *yaml.Node) error {
-	if node.Decode(&o.Ref) == nil && o.Ref.Ref != "" {
-		return nil
-	}
-
-	o.Ref = nil
-	if err := node.Decode(&o.Spec); err != nil {
 		return fmt.Errorf("%T: %w", o.Spec, err)
 	}
 	return nil

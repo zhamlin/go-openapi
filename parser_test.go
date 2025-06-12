@@ -10,15 +10,15 @@ import (
 )
 
 type Simple struct {
-	Fs        string `json:"fs,omitempty" openapi:",format:password" yaml:"FS,omitempty"` // json name should be used
-	Fi        int    `yaml:"FI,omitempty"`                                                // yaml name shuld be used
+	Fs        string `json:"fs,omitempty" openapi:",format:password"` // json name should be used
+	Fi        int    // yaml name shuld be used
 	Fb        *bool
-	Fbs       []byte            `json:"fbs,omitempty"                                  openapi:"fBS" yaml:"FS,omitempty"` // openapi name should be used
-	Fm        map[string]string `openapi:",required,title:Map of strings,addtype:null"`                                   // default field name should be used
+	Fbs       []byte            `json:"fbs,omitempty"                                  openapi:"fBS"` // openapi name should be used
+	Fm        map[string]string `openapi:",required,title:Map of strings,addtype:null"`               // default field name should be used
 	Excluded1 map[string]string `openapi:"-"`
 	Excluded2 map[string]string `json:"-"`
-	Excluded3 map[string]string `yaml:"-"`
-	Fa        any               `openapi:",deprecated"`
+	Excluded3 map[string]string
+	Fa        any `openapi:",deprecated"`
 
 	fp string
 }
@@ -29,7 +29,7 @@ type Complex struct {
 }
 
 type SimpleByRef struct {
-	S Simple `json:"s" openapi:"s,required,title:Simple By Ref,ref:#/components/schemas/github.com.sv-tools.openapi_test.Simple" yaml:"s"`
+	S Simple `json:"s" openapi:"s,required,title:Simple By Ref,ref:#/components/schemas/github.com.sv-tools.openapi_test.Simple"`
 }
 
 func TestParseObject(t *testing.T) {

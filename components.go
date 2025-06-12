@@ -81,25 +81,25 @@ import (
 //	            read:pets: read your pets
 type Components struct {
 	// An object to hold reusable Schema Objects.
-	Schemas map[string]*RefOrSpec[Schema] `json:"schemas,omitempty" yaml:"schemas,omitempty"`
+	Schemas map[string]*RefOrSpec[Schema] `json:"schemas,omitempty"`
 	// An object to hold reusable Response Objects.
-	Responses map[string]*RefOrSpec[Extendable[Response]] `json:"responses,omitempty" yaml:"responses,omitempty"`
+	Responses map[string]*RefOrSpec[Extendable[Response]] `json:"responses,omitempty"`
 	// An object to hold reusable Parameter Objects.
-	Parameters map[string]*RefOrSpec[Extendable[Parameter]] `json:"parameters,omitempty" yaml:"parameters,omitempty"`
+	Parameters map[string]*RefOrSpec[Extendable[Parameter]] `json:"parameters,omitempty"`
 	// An object to hold reusable Example Objects.
-	Examples map[string]*RefOrSpec[Extendable[Example]] `json:"examples,omitempty" yaml:"examples,omitempty"`
+	Examples map[string]*RefOrSpec[Extendable[Example]] `json:"examples,omitempty"`
 	// An object to hold reusable Request Body Objects.
-	RequestBodies map[string]*RefOrSpec[Extendable[RequestBody]] `json:"requestBodies,omitempty" yaml:"requestBodies,omitempty"`
+	RequestBodies map[string]*RefOrSpec[Extendable[RequestBody]] `json:"requestBodies,omitempty"`
 	// An object to hold reusable Header Objects.
-	Headers map[string]*RefOrSpec[Extendable[Header]] `json:"headers,omitempty" yaml:"headers,omitempty"`
+	Headers map[string]*RefOrSpec[Extendable[Header]] `json:"headers,omitempty"`
 	// An object to hold reusable Security Scheme Objects.
-	SecuritySchemes map[string]*RefOrSpec[Extendable[SecurityScheme]] `json:"securitySchemes,omitempty" yaml:"securitySchemes,omitempty"`
+	SecuritySchemes map[string]*RefOrSpec[Extendable[SecurityScheme]] `json:"securitySchemes,omitempty"`
 	// An object to hold reusable Link Objects.
-	Links map[string]*RefOrSpec[Extendable[Link]] `json:"links,omitempty" yaml:"links,omitempty"`
+	Links map[string]*RefOrSpec[Extendable[Link]] `json:"links,omitempty"`
 	// An object to hold reusable Callback Objects.
-	Callbacks map[string]*RefOrSpec[Extendable[Callback]] `json:"callbacks,omitempty" yaml:"callbacks,omitempty"`
+	Callbacks map[string]*RefOrSpec[Extendable[Callback]] `json:"callbacks,omitempty"`
 	// An object to hold reusable Path Item Object.
-	Paths map[string]*RefOrSpec[Extendable[PathItem]] `json:"paths,omitempty" yaml:"paths,omitempty"`
+	Paths map[string]*RefOrSpec[Extendable[PathItem]] `json:"paths,omitempty"`
 }
 
 // Add adds the given object to the appropriate list based on a type and returns the current object (self|this).

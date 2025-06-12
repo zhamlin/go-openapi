@@ -6,8 +6,6 @@ import (
 	"reflect"
 	"regexp"
 	"strings"
-
-	"gopkg.in/yaml.v3"
 )
 
 const (
@@ -41,19 +39,19 @@ type Schema struct {
 	// tooling which specification version is intended.
 	//
 	// https://json-schema.org/understanding-json-schema/reference/schema#schema
-	Schema string `json:"$schema,omitempty" yaml:"$schema,omitempty"`
+	Schema string `json:"$schema,omitempty"`
 	// The value of $id is a URI-reference without a fragment that resolves against the retrieval-uri.
 	// The resulting URI is the base URI for the schema.
 	//
 	// https://json-schema.org/understanding-json-schema/structuring#id
-	ID string `json:"$id,omitempty" yaml:"$id,omitempty"`
+	ID string `json:"$id,omitempty"`
 	// https://json-schema.org/understanding-json-schema/structuring#dollardefs
-	Defs          map[string]*RefOrSpec[Schema] `json:"$defs,omitempty"          yaml:"$defs,omitempty"`
-	DynamicRef    string                        `json:"$dynamicRef,omitempty"    yaml:"$dynamicRef,omitempty"`
-	Vocabulary    map[string]bool               `json:"$vocabulary,omitempty"    yaml:"$vocabulary,omitempty"`
-	DynamicAnchor string                        `json:"$dynamicAnchor,omitempty" yaml:"dynamicAnchor,omitempty"`
+	Defs          map[string]*RefOrSpec[Schema] `json:"$defs,omitempty"`
+	DynamicRef    string                        `json:"$dynamicRef,omitempty"`
+	Vocabulary    map[string]bool               `json:"$vocabulary,omitempty"`
+	DynamicAnchor string                        `json:"$dynamicAnchor,omitempty"`
 	// https://json-schema.org/understanding-json-schema/reference/type#type-specific-keywords
-	Type *SingleOrArray[string] `json:"type,omitempty" yaml:"type,omitempty"`
+	Type *SingleOrArray[string] `json:"type,omitempty"`
 
 	// *** Generic Fields ***
 	//
@@ -66,15 +64,15 @@ type Schema struct {
 	// However, default is typically used to express that if a value is missing,
 	// then the value is semantically the same as if the value was present with the default value.
 	// The value of default should validate against the schema in which it resides, but that isn't required.
-	Default any `json:"default,omitempty" yaml:"default,omitempty"`
+	Default any `json:"default,omitempty"`
 	// The title keyword preferably be short.
-	Title string `json:"title,omitempty" yaml:"title,omitempty"`
+	Title string `json:"title,omitempty"`
 	// The description keyword provides a more lengthy explanation about the purpose of the data described by the schema.
-	Description string `json:"description,omitempty" yaml:"description,omitempty"`
+	Description string `json:"description,omitempty"`
 	// The const keyword is used to restrict a value to a single value.
 	//
 	// https://json-schema.org/understanding-json-schema/reference/const
-	Const string `json:"const,omitempty" yaml:"const,omitempty"`
+	Const string `json:"const,omitempty"`
 	// The $comment keyword is strictly intended for adding comments to a schema.
 	// Its value must always be a string.
 	// Unlike the annotations title, description, and examples, JSON schema implementations aren’t allowed
@@ -83,28 +81,28 @@ type Schema struct {
 	// but should not be used to communicate to users of the schema.
 	//
 	// https://json-schema.org/understanding-json-schema/reference/generic.html#comments
-	Comment string `json:"$comment,omitempty" yaml:"$comment,omitempty"`
+	Comment string `json:"$comment,omitempty"`
 	// The enum keyword is used to restrict a value to a fixed set of values.
 	// It must be an array with at least one element, where each element is unique.
 	//
 	// https://json-schema.org/understanding-json-schema/reference/generic.html#enumerated-values
-	Enum []any `json:"enum,omitempty" yaml:"enum,omitempty"`
+	Enum []any `json:"enum,omitempty"`
 	// The examples keyword is a place to provide an array of examples that validate against the schema.
 	// This isn't used for validation, but may help with explaining the effect and purpose of the schema to a reader.
 	// Each entry should validate against the schema in which it resides, but that isn't strictly required.
 	// There is no need to duplicate the default value in the examples array,
 	// since default will be treated as another example.
-	Examples []any `json:"examples,omitempty" yaml:"examples,omitempty"`
+	Examples []any `json:"examples,omitempty"`
 	// The readOnly indicates that a value should not be modified.
 	// It could be used to indicate that a PUT request that changes a value would result in a 400 Bad Request response.
-	ReadOnly bool `json:"readOnly,omitempty" yaml:"readOnly,omitempty"`
+	ReadOnly bool `json:"readOnly,omitempty"`
 	// The writeOnly indicates that a value may be set, but will remain hidden.
 	// In could be used to indicate you can set a value with a PUT request,
 	// but it would not be included when retrieving that record with a GET request.
-	WriteOnly bool `json:"writeOnly,omitempty" yaml:"writeOnly,omitempty"`
+	WriteOnly bool `json:"writeOnly,omitempty"`
 	// The deprecated keyword is a boolean that indicates that the instance value the keyword applies to
 	// should not be used and may be removed in the future.
-	Deprecated bool `json:"deprecated,omitempty" yaml:"deprecated,omitempty"`
+	Deprecated bool `json:"deprecated,omitempty"`
 
 	// *** Media Fields ***
 	// String-encoding non-JSON data.
@@ -112,17 +110,17 @@ type Schema struct {
 	// https://json-schema.org/understanding-json-schema/reference/non_json_data#media:-string-encoding-non-json-data
 
 	// https://json-schema.org/understanding-json-schema/reference/non_json_data#contentschema
-	ContentSchema *RefOrSpec[Schema] `json:"contentSchema,omitempty" yaml:"contentSchema,omitempty"`
+	ContentSchema *RefOrSpec[Schema] `json:"contentSchema,omitempty"`
 	// The contentMediaType keyword specifies the MIME type of the contents of a string, as described in RFC 2046.
 	// There is a list of MIME types officially registered by the IANA, but the set of types supported will be
 	// application and operating system dependent.
 	//
 	// https://json-schema.org/understanding-json-schema/reference/non_json_data#contentmediatype
-	ContentMediaType string `json:"contentMediaType,omitempty" yaml:"contentMediaType,omitempty"`
+	ContentMediaType string `json:"contentMediaType,omitempty"`
 	// The contentEncoding keyword specifies the encoding used to store the contents, as specified in RFC 2054, part 6.1 and RFC 4648.
 	//
 	// https://json-schema.org/understanding-json-schema/reference/non_json_data#contentencoding
-	ContentEncoding string `json:"contentEncoding,omitempty" yaml:"contentEncoding,omitempty"`
+	ContentEncoding string `json:"contentEncoding,omitempty"`
 
 	// *** Composition Fields ***
 	//
@@ -131,19 +129,19 @@ type Schema struct {
 	// The not keyword declares that an instance validates if it doesn’t validate against the given subschema.
 	//
 	// https://json-schema.org/understanding-json-schema/reference/combining.html#not
-	Not *RefOrSpec[Schema] `json:"not,omitempty" yaml:"not,omitempty"`
+	Not *RefOrSpec[Schema] `json:"not,omitempty"`
 	// To validate against allOf, the given data must be valid against all of the given subschemas.
 	//
 	// https://json-schema.org/understanding-json-schema/reference/combining.html#allof
-	AllOf []*RefOrSpec[Schema] `json:"allOf,omitempty" yaml:"allOf,omitempty"`
+	AllOf []*RefOrSpec[Schema] `json:"allOf,omitempty"`
 	// To validate against anyOf, the given data must be valid against any (one or more) of the given subschemas.
 	//
 	// https://json-schema.org/understanding-json-schema/reference/combining.html#anyof
-	AnyOf []*RefOrSpec[Schema] `json:"anyOf,omitempty" yaml:"anyOf,omitempty"`
+	AnyOf []*RefOrSpec[Schema] `json:"anyOf,omitempty"`
 	// To validate against oneOf, the given data must be valid against exactly one of the given subschemas.
 	//
 	// https://json-schema.org/understanding-json-schema/reference/combining.html#oneof
-	OneOf []*RefOrSpec[Schema] `json:"oneOf,omitempty" yaml:"oneOf,omitempty"`
+	OneOf []*RefOrSpec[Schema] `json:"oneOf,omitempty"`
 
 	// *** Conditional Fields ***
 	// Applying Subschemas Conditionally.
@@ -161,19 +159,19 @@ type Schema struct {
 	// are required if p is present.
 	//
 	// https://json-schema.org/understanding-json-schema/reference/conditionals.html#dependentrequired
-	DependentRequired map[string][]string `json:"dependentRequired,omitempty" yaml:"dependentRequired,omitempty"`
+	DependentRequired map[string][]string `json:"dependentRequired,omitempty"`
 	// The dependentSchemas keyword conditionally applies a subschema when a given property is present.
 	// This schema is applied in the same way allOf applies schemas.
 	// Nothing is merged or extended.
 	// Both schemas apply independently.
 	//
 	// https://json-schema.org/understanding-json-schema/reference/conditionals.html#dependentschemas
-	DependentSchemas map[string]*RefOrSpec[Schema] `json:"dependentSchemas,omitempty" yaml:"dependentSchemas,omitempty"`
+	DependentSchemas map[string]*RefOrSpec[Schema] `json:"dependentSchemas,omitempty"`
 
 	// https://json-schema.org/understanding-json-schema/reference/conditionals.html#if-then-else
-	If   *RefOrSpec[Schema] `json:"if,omitempty"   yaml:"if,omitempty"`
-	Then *RefOrSpec[Schema] `json:"then,omitempty" yaml:"then,omitempty"`
-	Else *RefOrSpec[Schema] `json:"else,omitempty" yaml:"else,omitempty"`
+	If   *RefOrSpec[Schema] `json:"if,omitempty"`
+	Then *RefOrSpec[Schema] `json:"then,omitempty"`
+	Else *RefOrSpec[Schema] `json:"else,omitempty"`
 
 	// *** Number Type Fields ***
 	//
@@ -183,24 +181,24 @@ type Schema struct {
 	// It may be set to any positive number.
 	//
 	// https://json-schema.org/understanding-json-schema/reference/numeric.html#multiples
-	MultipleOf *int `json:"multipleOf,omitempty" yaml:"multipleOf,omitempty"`
+	MultipleOf *int `json:"multipleOf,omitempty"`
 	// x ≥ minimum
-	Minimum *int `json:"minimum,omitempty" yaml:"minimum,omitempty"`
+	Minimum *int `json:"minimum,omitempty"`
 	// x > exclusiveMinimum
-	ExclusiveMinimum *int `json:"exclusiveMinimum,omitempty" yaml:"exclusiveMinimum,omitempty"`
+	ExclusiveMinimum *int `json:"exclusiveMinimum,omitempty"`
 	// x ≤ maximum
-	Maximum *int `json:"maximum,omitempty" yaml:"maximum,omitempty"`
+	Maximum *int `json:"maximum,omitempty"`
 	// x < exclusiveMaximum
-	ExclusiveMaximum *int `json:"exclusiveMaximum,omitempty" yaml:"exclusiveMaximum,omitempty"`
+	ExclusiveMaximum *int `json:"exclusiveMaximum,omitempty"`
 
 	// *** String Type Fields ***
 	//
 	// https://json-schema.org/understanding-json-schema/reference/string.html#string
 
-	MinLength *int   `json:"minLength,omitempty" yaml:"minLength,omitempty"`
-	MaxLength *int   `json:"maxLength,omitempty" yaml:"maxLength,omitempty"`
-	Pattern   string `json:"pattern,omitempty"   yaml:"pattern,omitempty"`
-	Format    string `json:"format,omitempty"    yaml:"format,omitempty"`
+	MinLength *int   `json:"minLength,omitempty"`
+	MaxLength *int   `json:"maxLength,omitempty"`
+	Pattern   string `json:"pattern,omitempty"`
+	Format    string `json:"format,omitempty"`
 
 	// ** Array Type Fields ***
 	//
@@ -210,33 +208,33 @@ type Schema struct {
 	// For this kind of array, set the items keyword to a single schema that will be used to validate all of the items in the array.
 	//
 	// https://json-schema.org/understanding-json-schema/reference/array#items
-	Items *BoolOrSchema `json:"items,omitempty" yaml:"items,omitempty"`
+	Items *BoolOrSchema `json:"items,omitempty"`
 	// https://json-schema.org/understanding-json-schema/reference/array#length
-	MaxItems *int `json:"maxItems,omitempty" yaml:"maxItems,omitempty"`
+	MaxItems *int `json:"maxItems,omitempty"`
 	// The unevaluatedItems keyword is similar to unevaluatedProperties, but for items.
 	//
 	// https://json-schema.org/understanding-json-schema/reference/array#unevaluateditems
-	UnevaluatedItems *BoolOrSchema `json:"unevaluatedItems,omitempty" yaml:"unevaluatedItems,omitempty"`
+	UnevaluatedItems *BoolOrSchema `json:"unevaluatedItems,omitempty"`
 	// While the items schema must be valid for every item in the array, the contains schema only needs
 	// to validate against one or more items in the array.
 	//
 	// https://json-schema.org/understanding-json-schema/reference/array.html#contains
-	Contains    *RefOrSpec[Schema] `json:"contains,omitempty"    yaml:"contains,omitempty"`
-	MinContains *int               `json:"minContains,omitempty" yaml:"minContains,omitempty"`
-	MaxContains *int               `json:"maxContains,omitempty" yaml:"maxContains,omitempty"`
+	Contains    *RefOrSpec[Schema] `json:"contains,omitempty"`
+	MinContains *int               `json:"minContains,omitempty"`
+	MaxContains *int               `json:"maxContains,omitempty"`
 	// https://json-schema.org/understanding-json-schema/reference/array.html#length
-	MinItems *int `json:"minItems,omitempty" yaml:"minItems,omitempty"`
+	MinItems *int `json:"minItems,omitempty"`
 	// A schema can ensure that each of the items in an array is unique.
 	// Simply set the uniqueItems keyword to true.
 	//
 	// https://json-schema.org/understanding-json-schema/reference/array.html#uniqueness
-	UniqueItems *bool `json:"uniqueItems,omitempty" yaml:"uniqueItems,omitempty"`
+	UniqueItems *bool `json:"uniqueItems,omitempty"`
 	// The prefixItems is an array, where each item is a schema that corresponds to each index of the document’s array.
 	// That is, an array where the first element validates the first element of the input array,
 	// the second element validates the second element of the input array, etc.
 	//
 	// https://json-schema.org/understanding-json-schema/reference/array.html#tuple-validation
-	PrefixItems []*RefOrSpec[Schema] `json:"prefixItems,omitempty" yaml:"prefixItems,omitempty"`
+	PrefixItems []*RefOrSpec[Schema] `json:"prefixItems,omitempty"`
 
 	// ** Object Type Fields ***
 	//
@@ -248,13 +246,13 @@ type Schema struct {
 	// Any property that doesn't match any of the property names in the properties keyword is ignored by this keyword.
 	//
 	// https://json-schema.org/understanding-json-schema/reference/object.html#properties
-	Properties map[string]*RefOrSpec[Schema] `json:"properties,omitempty" yaml:"properties,omitempty"`
+	Properties map[string]*RefOrSpec[Schema] `json:"properties,omitempty"`
 	// Sometimes you want to say that, given a particular kind of property name, the value should match a particular schema.
 	// That’s where patternProperties comes in: it maps regular expressions to schemas.
 	// If a property name matches the given regular expression, the property value must validate against the corresponding schema.
 	//
 	// https://json-schema.org/understanding-json-schema/reference/object.html#pattern-properties
-	PatternProperties map[string]*RefOrSpec[Schema] `json:"patternProperties,omitempty" yaml:"patternProperties,omitempty"`
+	PatternProperties map[string]*RefOrSpec[Schema] `json:"patternProperties,omitempty"`
 	// The additionalProperties keyword is used to control the handling of extra stuff, that is,
 	// properties whose names are not listed in the properties keyword or match any of the regular expressions
 	// in the patternProperties keyword.
@@ -265,12 +263,12 @@ type Schema struct {
 	// Setting the additionalProperties schema to false means no additional properties will be allowed.
 	//
 	// https://json-schema.org/understanding-json-schema/reference/object.html#additional-properties
-	AdditionalProperties *BoolOrSchema `json:"additionalProperties,omitempty" yaml:"additionalProperties,omitempty"`
+	AdditionalProperties *BoolOrSchema `json:"additionalProperties,omitempty"`
 	// The unevaluatedProperties keyword is similar to additionalProperties except that it can recognize properties declared in subschemas.
 	// So, the example from the previous section can be rewritten without the need to redeclare properties.
 	//
 	// https://json-schema.org/understanding-json-schema/reference/object.html#unevaluated-properties
-	UnevaluatedProperties *BoolOrSchema `json:"unevaluatedProperties,omitempty" yaml:"unevaluatedProperties,omitempty"`
+	UnevaluatedProperties *BoolOrSchema `json:"unevaluatedProperties,omitempty"`
 	// The names of properties can be validated against a schema, irrespective of their values.
 	// This can be useful if you don’t want to enforce specific properties, but you want to make sure that
 	// the names of those properties follow a specific convention.
@@ -278,52 +276,52 @@ type Schema struct {
 	// as attributes in a particular programming language.
 	//
 	// https://json-schema.org/understanding-json-schema/reference/object.html#property-names
-	PropertyNames *RefOrSpec[Schema] `json:"propertyNames,omitempty" yaml:"propertyNames,omitempty"`
+	PropertyNames *RefOrSpec[Schema] `json:"propertyNames,omitempty"`
 	// The min number of properties on an object.
 	//
 	// https://json-schema.org/understanding-json-schema/reference/object.html#size
-	MinProperties *int `json:"minProperties,omitempty" yaml:"minProperties,omitempty"`
+	MinProperties *int `json:"minProperties,omitempty"`
 	// The max number of properties on an object.
 	//
 	// https://json-schema.org/understanding-json-schema/reference/object.html#size
-	MaxProperties *int `json:"maxProperties,omitempty" yaml:"maxProperties,omitempty"`
+	MaxProperties *int `json:"maxProperties,omitempty"`
 	// The required keyword takes an array of zero or more strings.
 	// Each of these strings must be unique.
 	//
 	// https://json-schema.org/understanding-json-schema/reference/object.html#required-properties
-	Required []string `json:"required,omitempty" yaml:"required,omitempty"`
+	Required []string `json:"required,omitempty"`
 
 	// *** OpenAPI Fields ***
 
 	// Adds support for polymorphism.
 	// The discriminator is an object name that is used to differentiate between other schemas which may satisfy the payload description.
 	// See Composition and Inheritance for more details.
-	Discriminator *Discriminator `json:"discriminator,omitempty" yaml:"discriminator,omitempty"`
+	Discriminator *Discriminator `json:"discriminator,omitempty"`
 	// Additional external documentation for this tag.
 	// xml
-	XML *Extendable[XML] `json:"xml,omitempty" yaml:"xml,omitempty"`
+	XML *Extendable[XML] `json:"xml,omitempty"`
 	// Additional external documentation for this schema.
-	ExternalDocs *Extendable[ExternalDocs] `json:"externalDocs,omitempty" yaml:"externalDocs,omitempty"`
+	ExternalDocs *Extendable[ExternalDocs] `json:"externalDocs,omitempty"`
 	// A free-form property to include an example of an instance for this schema.
 	// To represent examples that cannot be naturally represented in JSON or YAML, a string value can be used to
 	// contain the example with escaping where necessary.
 	//
 	// Deprecated: The example property has been deprecated in favor of the JSON Schema examples keyword.
 	// Use of example is discouraged, and later versions of this specification may remove it.
-	Example any `json:"example,omitempty" yaml:"example,omitempty"`
+	Example any `json:"example,omitempty"`
 
-	Extensions map[string]any `json:"-" yaml:"-"`
+	Extensions map[string]any `json:"-"`
 
 	// *** Go Fields ***
 
 	// GoPackage is a custom field to store the Go package of the schema.
-	GoPackage string `json:"x-go-package,omitempty" yaml:"x-go-package,omitempty"`
+	GoPackage string `json:"x-go-package,omitempty"`
 	// GoType is a custom field to store the Go type of the schema.
-	GoType string `json:"x-go-type,omitempty" yaml:"x-go-type,omitempty"`
+	GoType string `json:"x-go-type,omitempty"`
 }
 
 // AddExt sets the extension and returns the current object (self|this).
-// Schema does not require special `x-` prefix.
+// Schema does not require special`x-`prefix.
 // The extension will be ignored if the name overlaps with a struct field during marshaling to JSON or YAML.
 func (o *Schema) AddExt(name string, value any) *Schema {
 	if o.Extensions == nil {
@@ -431,54 +429,6 @@ func (o *Schema) UnmarshalJSON(data []byte) error {
 	}
 	var s intSchema
 	if err := json.Unmarshal(fields, &s); err != nil {
-		return fmt.Errorf("%T: %w", o, err)
-	}
-	s.Extensions = exts
-	*o = Schema(s)
-	return nil
-}
-
-// MarshalYAML implements yaml.Marshaler interface.
-func (o *Schema) MarshalYAML() (any, error) {
-	var raw map[string]any
-	exts, err := yaml.Marshal(&o.Extensions)
-	if err != nil {
-		return nil, fmt.Errorf("%T.Extensions: %w", o, err)
-	}
-	if err := yaml.Unmarshal(exts, &raw); err != nil {
-		return nil, fmt.Errorf("%T(raw extensions): %w", o, err)
-	}
-	s := intSchema(*o)
-	fields, err := yaml.Marshal(&s)
-	if err != nil {
-		return nil, fmt.Errorf("%T: %w", o, err)
-	}
-	if err := yaml.Unmarshal(fields, &raw); err != nil {
-		return nil, fmt.Errorf("%T(raw fields): %w", o, err)
-	}
-	return raw, nil
-}
-
-// UnmarshalYAML implements yaml.Unmarshaler interface.
-func (o *Schema) UnmarshalYAML(node *yaml.Node) error {
-	var raw map[string]any
-	if err := node.Decode(&raw); err != nil {
-		return fmt.Errorf("%T: %w", o, err)
-	}
-	exts := make(map[string]any)
-	keys := getFields(reflect.TypeOf(o), "json")
-	for name, value := range raw {
-		if _, ok := keys[name]; !ok {
-			exts[name] = value
-			delete(raw, name)
-		}
-	}
-	fields, err := yaml.Marshal(&raw)
-	if err != nil {
-		return fmt.Errorf("%T(raw): %w", o, err)
-	}
-	var s intSchema
-	if err := yaml.Unmarshal(fields, &s); err != nil {
 		return fmt.Errorf("%T: %w", o, err)
 	}
 	s.Extensions = exts

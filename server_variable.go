@@ -9,13 +9,13 @@ type ServerVariable struct {
 	// Note this behavior is different than the Schema Object’s treatment of default values,
 	// because in those cases parameter values are optional.
 	// If the enum is defined, the value MUST exist in the enum’s values.
-	Default string `json:"default" yaml:"default"`
+	Default string `json:"default"`
 	// An optional description for the server variable.
 	// CommonMark syntax MAY be used for rich text representation.
-	Description string `json:"description,omitempty" yaml:"description,omitempty"`
+	Description string `json:"description,omitempty"`
 	// An enumeration of string values to be used if the substitution options are from a limited set.
 	// The array MUST NOT be empty.
-	Enum []string `json:"enum,omitempty" yaml:"enum,omitempty"`
+	Enum []string `json:"enum,omitempty"`
 }
 
 func (o *ServerVariable) validateSpec(location string, _ *Validator) []*validationError {

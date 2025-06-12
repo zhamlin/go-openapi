@@ -18,16 +18,16 @@ import "strings"
 type Server struct {
 	// A map between a variable name and its value.
 	// The value is used for substitution in the server’s URL template.
-	Variables map[string]*Extendable[ServerVariable] `json:"variables,omitempty" yaml:"variables,omitempty"`
+	Variables map[string]*Extendable[ServerVariable] `json:"variables,omitempty"`
 	// REQUIRED.
 	// A URL to the target host.
 	// This URL supports Server Variables and MAY be relative, to indicate that the host location is relative
 	// to the location where the OpenAPI document is being served.
 	// Variable substitutions will be made when a variable is named in {brackets}.
-	URL string `json:"url" yaml:"url"`
+	URL string `json:"url"`
 	// An optional string describing the host designated by the URL.
 	// CommonMark syntax MAY be used for rich text representation.
-	Description string `json:"description,omitempty" yaml:"description,omitempty"`
+	Description string `json:"description,omitempty"`
 }
 
 func (o *Server) validateSpec(location string, validator *Validator) []*validationError {

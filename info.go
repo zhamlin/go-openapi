@@ -22,22 +22,22 @@ package openapi
 type Info struct {
 	// REQUIRED.
 	// The title of the API.
-	Title string `json:"title" yaml:"title"`
+	Title string `json:"title"`
 	// A short summary of the API.
-	Summary string `json:"summary,omitempty" yaml:"summary,omitempty"`
+	Summary string `json:"summary,omitempty"`
 	// A description of the API.
 	// CommonMark syntax MAY be used for rich text representation.
-	Description string `json:"description,omitempty" yaml:"description,omitempty"`
+	Description string `json:"description,omitempty"`
 	// A URL to the Terms of Service for the API.
 	// This MUST be in the form of a URL.
-	TermsOfService string `json:"termsOfService,omitempty" yaml:"termsOfService,omitempty"`
+	TermsOfService string `json:"termsOfService,omitempty"`
 	// The contact information for the exposed API.
-	Contact *Extendable[Contact] `json:"contact,omitempty" yaml:"contact,omitempty"`
+	Contact *Extendable[Contact] `json:"contact,omitempty"`
 	// The license information for the exposed API.
-	License *Extendable[License] `json:"license,omitempty" yaml:"license,omitempty"`
+	License *Extendable[License] `json:"license,omitempty"`
 	// REQUIRED.
 	// The version of the OpenAPI document (which is distinct from the OpenAPI Specification version or the API implementation version).
-	Version string `json:"version" yaml:"version"`
+	Version string `json:"version"`
 }
 
 func (o *Info) validateSpec(location string, validator *Validator) []*validationError {

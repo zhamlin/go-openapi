@@ -6,14 +6,13 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"gopkg.in/yaml.v3"
 
 	"github.com/sv-tools/openapi"
 )
 
 type testRefOrSpec struct {
-	A string `json:"a,omitempty" yaml:"a,omitempty"`
-	B string `json:"b,omitempty" yaml:"b,omitempty"`
+	A string `json:"a,omitempty"`
+	B string `json:"b,omitempty"`
 }
 
 func TestNewRefOrSpec(t *testing.T) {
@@ -217,27 +216,6 @@ func TestRefOrSpec_Marshal_Unmarshal(t *testing.T) {
 					tt.expected = tt.data
 				}
 				require.JSONEq(t, tt.expected, string(data))
-			})
-
-			t.Run("yaml", func(t *testing.T) {
-				var v *openapi.RefOrSpec[testRefOrSpec]
-				require.NoError(t, yaml.Unmarshal([]byte(tt.data), &v))
-				if tt.nilRef {
-					require.Nil(t, v.Ref)
-				} else {
-					require.NotNil(t, v.Ref)
-				}
-				if tt.nilSpec {
-					require.Nil(t, v.Spec)
-				} else {
-					require.NotNil(t, v.Spec)
-				}
-				data, err := yaml.Marshal(&v)
-				require.NoError(t, err)
-				if tt.expected == "" {
-					tt.expected = tt.data
-				}
-				require.YAMLEq(t, tt.expected, string(data))
 			})
 		})
 	}

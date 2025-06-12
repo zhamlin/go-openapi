@@ -11,11 +11,11 @@ package openapi
 type ExternalDocs struct {
 	// A description of the target documentation.
 	// CommonMark syntax MAY be used for rich text representation.
-	Description string `json:"description" yaml:"description"`
+	Description string `json:"description"`
 	// REQUIRED.
 	// The URL for the target documentation.
 	// This MUST be in the form of a URL.
-	URL string `json:"url" yaml:"url"`
+	URL string `json:"url"`
 }
 
 func (o *ExternalDocs) validateSpec(location string, _ *Validator) []*validationError {

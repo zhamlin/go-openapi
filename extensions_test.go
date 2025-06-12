@@ -5,13 +5,12 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"gopkg.in/yaml.v3"
 
 	"github.com/sv-tools/openapi"
 )
 
 type testExtendable struct {
-	A string `json:"a,omitempty" yaml:"a,omitempty"`
+	A string `json:"a,omitempty"`
 }
 
 func TestExtendable_Marshal_Unmarshal(t *testing.T) {
@@ -53,21 +52,6 @@ func TestExtendable_Marshal_Unmarshal(t *testing.T) {
 					tt.expected = tt.data
 				}
 				require.JSONEq(t, tt.expected, string(data))
-			})
-			t.Run("yaml", func(t *testing.T) {
-				var v *openapi.Extendable[testExtendable]
-				require.NoError(t, yaml.Unmarshal([]byte(tt.data), &v))
-				if tt.emptyExtensions {
-					require.Empty(t, v.Extensions)
-				} else {
-					require.NotEmpty(t, v.Extensions)
-				}
-				data, err := yaml.Marshal(&v)
-				require.NoError(t, err)
-				if tt.expected == "" {
-					tt.expected = tt.data
-				}
-				require.YAMLEq(t, tt.expected, string(data))
 			})
 		})
 	}

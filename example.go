@@ -31,20 +31,20 @@ package openapi
 //	          externalValue: 'https://foo.bar/examples/address-example.txt'
 type Example struct {
 	// Short description for the example.
-	Summary string `json:"summary,omitempty" yaml:"summary,omitempty"`
+	Summary string `json:"summary,omitempty"`
 	// Long description for the example.
 	// CommonMark syntax MAY be used for rich text representation.
-	Description string `json:"description,omitempty" yaml:"description,omitempty"`
+	Description string `json:"description,omitempty"`
 	// Embedded literal example.
 	// The value field and externalValue field are mutually exclusive.
 	// To represent examples of media types that cannot naturally represented in JSON or YAML,
 	// use a string value to contain the example, escaping where necessary.
-	Value any `json:"value,omitempty" yaml:"value,omitempty"`
+	Value any `json:"value,omitempty"`
 	// A URI that points to the literal example.
 	// This provides the capability to reference examples that cannot easily be included in JSON or YAML documents.
 	// The value field and externalValue field are mutually exclusive.
 	// See the rules for resolving Relative References.
-	ExternalValue string `json:"externalValue,omitempty" yaml:"externalValue,omitempty"`
+	ExternalValue string `json:"externalValue,omitempty"`
 }
 
 func (o *Example) validateSpec(location string, _ *Validator) []*validationError {

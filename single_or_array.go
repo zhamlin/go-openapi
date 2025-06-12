@@ -2,8 +2,6 @@ package openapi
 
 import (
 	"encoding/json"
-
-	"gopkg.in/yaml.v3"
 )
 
 // SingleOrArray holds list or single value
@@ -36,29 +34,6 @@ func (o *SingleOrArray[T]) MarshalJSON() ([]byte, error) {
 		v = (*o)[0]
 	}
 	return json.Marshal(&v)
-}
-
-// UnmarshalYAML implements yaml.Unmarshaler interface.
-func (o *SingleOrArray[T]) UnmarshalYAML(node *yaml.Node) error {
-	var ret []T
-	if node.Decode(&ret) != nil {
-		var s T
-		if err := node.Decode(&s); err != nil {
-			return err
-		}
-		ret = []T{s}
-	}
-	*o = ret
-	return nil
-}
-
-// MarshalYAML implements yaml.Marshaler interface.
-func (o *SingleOrArray[T]) MarshalYAML() (any, error) {
-	var v any = []T(*o)
-	if len(*o) == 1 {
-		v = (*o)[0]
-	}
-	return v, nil
 }
 
 func (o *SingleOrArray[T]) Add(v ...T) *SingleOrArray[T] {

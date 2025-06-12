@@ -222,7 +222,7 @@ func parseObject(location string, t reflect.Type, components *Extendable[Compone
 func applyTag(field *reflect.StructField, schema, parent *SchemaBuilder) (name string) {
 	name = field.Name
 
-	for _, tagName := range []string{"json", "yaml"} {
+	for _, tagName := range []string{"json"} {
 		if tag, ok := field.Tag.Lookup(tagName); ok {
 			parts := strings.SplitN(tag, ",", 2)
 			if len(parts) > 0 {

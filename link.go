@@ -58,26 +58,26 @@ package openapi
 //	          description: the user's address
 type Link struct {
 	// A literal value or {expression} to use as a request body when calling the target operation.
-	RequestBody any `json:"requestBody,omitempty" yaml:"requestBody,omitempty"`
+	RequestBody any `json:"requestBody,omitempty"`
 	// A map representing parameters to pass to an operation as specified with operationId or identified via operationRef.
 	// The key is the parameter name to be used, whereas the value can be a constant or an expression to be evaluated and
 	// passed to the linked operation.
 	// The parameter name can be qualified using the parameter location [{in}.]{name} for operations that use
 	// the same parameter name in different locations (e.g. path.id).
-	Parameters map[string]any `json:"parameters,omitempty" yaml:"parameters,omitempty"`
+	Parameters map[string]any `json:"parameters,omitempty"`
 	// A server object to be used by the target operation.
-	Server *Extendable[Server] `json:"server,omitempty" yaml:"server,omitempty"`
+	Server *Extendable[Server] `json:"server,omitempty"`
 	// A relative or absolute URI reference to an OAS operation.
 	// This field is mutually exclusive of the operationId field, and MUST point to an Operation Object.
 	// Relative operationRef values MAY be used to locate an existing Operation Object in the OpenAPI definition.
 	// See the rules for resolving Relative References.
-	OperationRef string `json:"operationRef,omitempty" yaml:"operationRef,omitempty"`
+	OperationRef string `json:"operationRef,omitempty"`
 	// The name of an existing, resolvable OAS operation, as defined with a unique operationId.
 	// This field is mutually exclusive of the operationRef field.
-	OperationID string `json:"operationId,omitempty" yaml:"operationId,omitempty"`
+	OperationID string `json:"operationId,omitempty"`
 	// A description of the link.
 	// CommonMark syntax MAY be used for rich text representation.
-	Description string `json:"description,omitempty" yaml:"description,omitempty"`
+	Description string `json:"description,omitempty"`
 }
 
 func (o *Link) validateSpec(location string, validator *Validator) []*validationError {

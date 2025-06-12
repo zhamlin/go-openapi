@@ -11,13 +11,13 @@ package openapi
 //	description: Pets operations
 type Tag struct {
 	// Additional external documentation for this tag.
-	ExternalDocs *Extendable[ExternalDocs] `json:"externalDocs,omitempty" yaml:"externalDocs,omitempty"`
+	ExternalDocs *Extendable[ExternalDocs] `json:"externalDocs,omitempty"`
 	// REQUIRED.
 	// The name of the tag.
-	Name string `json:"name" yaml:"name"`
+	Name string `json:"name"`
 	// A description for the tag.
 	// CommonMark syntax MAY be used for rich text representation.
-	Description string `json:"description,omitempty" yaml:"description,omitempty"`
+	Description string `json:"description,omitempty"`
 }
 
 func (o *Tag) validateSpec(location string, validator *Validator) []*validationError {

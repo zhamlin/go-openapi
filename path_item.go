@@ -39,34 +39,34 @@ package openapi
 //	  style: simple
 type PathItem struct {
 	// An optional, string summary, intended to apply to all operations in this path.
-	Summary string `json:"summary,omitempty" yaml:"summary,omitempty"`
+	Summary string `json:"summary,omitempty"`
 	// An optional, string description, intended to apply to all operations in this path.
 	// CommonMark syntax MAY be used for rich text representation.
-	Description string `json:"description,omitempty" yaml:"description,omitempty"`
+	Description string `json:"description,omitempty"`
 	// A definition of a GET operation on this path.
-	Get *Extendable[Operation] `json:"get,omitempty" yaml:"get,omitempty"`
+	Get *Extendable[Operation] `json:"get,omitempty"`
 	// A definition of a PUT operation on this path.
-	Put *Extendable[Operation] `json:"put,omitempty" yaml:"put,omitempty"`
+	Put *Extendable[Operation] `json:"put,omitempty"`
 	// A definition of a POST operation on this path.
-	Post *Extendable[Operation] `json:"post,omitempty" yaml:"post,omitempty"`
+	Post *Extendable[Operation] `json:"post,omitempty"`
 	// A definition of a DELETE operation on this path.
-	Delete *Extendable[Operation] `json:"delete,omitempty" yaml:"delete,omitempty"`
+	Delete *Extendable[Operation] `json:"delete,omitempty"`
 	// A definition of a OPTIONS operation on this path.
-	Options *Extendable[Operation] `json:"options,omitempty" yaml:"options,omitempty"`
+	Options *Extendable[Operation] `json:"options,omitempty"`
 	// A definition of a HEAD operation on this path.
-	Head *Extendable[Operation] `json:"head,omitempty" yaml:"head,omitempty"`
+	Head *Extendable[Operation] `json:"head,omitempty"`
 	// A definition of a PATCH operation on this path.
-	Patch *Extendable[Operation] `json:"patch,omitempty" yaml:"patch,omitempty"`
+	Patch *Extendable[Operation] `json:"patch,omitempty"`
 	// A definition of a TRACE operation on this path.
-	Trace *Extendable[Operation] `json:"trace,omitempty" yaml:"trace,omitempty"`
+	Trace *Extendable[Operation] `json:"trace,omitempty"`
 	// An alternative server array to service all operations in this path.
-	Servers []*Extendable[Server] `json:"servers,omitempty" yaml:"servers,omitempty"`
+	Servers []*Extendable[Server] `json:"servers,omitempty"`
 	// A list of parameters that are applicable for all the operations described under this path.
 	// These parameters can be overridden at the operation level, but cannot be removed there.
 	// The list MUST NOT include duplicated parameters.
 	// A unique parameter is defined by a combination of a name and location.
 	// The list can use the Reference Object to link to parameters that are defined at the OpenAPI Object’s components/parameters.
-	Parameters []*RefOrSpec[Extendable[Parameter]] `json:"parameters,omitempty" yaml:"parameters,omitempty"`
+	Parameters []*RefOrSpec[Extendable[Parameter]] `json:"parameters,omitempty"`
 }
 
 func (o *PathItem) validateSpec(location string, validator *Validator) []*validationError {

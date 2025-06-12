@@ -13,29 +13,29 @@ package openapi
 // All fields are copied from Parameter Object as is, except name and in fields.
 type Header struct {
 	// The schema defining the type used for the header.
-	Schema *RefOrSpec[Schema] `json:"schema,omitempty" yaml:"schema,omitempty"`
+	Schema *RefOrSpec[Schema] `json:"schema,omitempty"`
 	// A map containing the representations for the header.
 	// The key is the media type and the value describes it.
 	// The map MUST only contain one entry.
-	Content map[string]*Extendable[MediaType] `json:"content,omitempty" yaml:"content,omitempty"`
+	Content map[string]*Extendable[MediaType] `json:"content,omitempty"`
 	// A brief description of the header.
 	// This could contain examples of use.
 	// CommonMark syntax MAY be used for rich text representation.
-	Description string `json:"description,omitempty" yaml:"description,omitempty"`
+	Description string `json:"description,omitempty"`
 	// Describes how the header value will be serialized.
-	Style string `json:"style,omitempty" yaml:"style,omitempty"`
+	Style string `json:"style,omitempty"`
 	// When this is true, header values of type array or object generate separate headers
 	// for each value of the array or key-value pair of the map.
 	// For other types of parameters this property has no effect.
 	// When style is form, the default value is true.
 	// For all other styles, the default value is false.
-	Explode bool `json:"explode,omitempty" yaml:"explode,omitempty"`
+	Explode bool `json:"explode,omitempty"`
 	// Determines whether this header is mandatory.
 	// The property MAY be included and its default value is false.
-	Required bool `json:"required,omitempty" yaml:"required,omitempty"`
+	Required bool `json:"required,omitempty"`
 	// Specifies that a header is deprecated and SHOULD be transitioned out of usage.
 	// Default value is false.
-	Deprecated bool `json:"deprecated,omitempty" yaml:"deprecated,omitempty"`
+	Deprecated bool `json:"deprecated,omitempty"`
 }
 
 func (o *Header) validateSpec(location string, validator *Validator) []*validationError {

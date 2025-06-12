@@ -5,14 +5,13 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"gopkg.in/yaml.v3"
 
 	"github.com/sv-tools/openapi"
 )
 
 type testAD struct {
-	AP   *openapi.BoolOrSchema `json:"ap,omitempty"   yaml:"ap,omitempty"`
-	Name string                `json:"name,omitempty" yaml:"name,omitempty"`
+	AP   *openapi.BoolOrSchema `json:"ap,omitempty"`
+	Name string                `json:"name,omitempty"`
 }
 
 func TestAdditionalPropertiesJSON(t *testing.T) {
@@ -65,22 +64,6 @@ func TestAdditionalPropertiesJSON(t *testing.T) {
 				newJson, err := json.Marshal(&v)
 				require.NoError(t, err)
 				require.JSONEq(t, tt.data, string(newJson))
-			})
-
-			t.Run("yaml", func(t *testing.T) {
-				var v testAD
-				require.NoError(t, yaml.Unmarshal([]byte(tt.data), &v))
-				require.Equal(t, "foo", v.Name)
-				if tt.nilAP {
-					require.Nil(t, v.AP)
-				} else {
-					require.NotNil(t, v.AP)
-					require.Equal(t, tt.allowed, v.AP.Allowed)
-					require.Equal(t, tt.nilSchema, v.AP.Schema == nil)
-				}
-				newYaml, err := yaml.Marshal(&v)
-				require.NoError(t, err)
-				require.YAMLEq(t, tt.data, string(newYaml))
 			})
 		})
 	}

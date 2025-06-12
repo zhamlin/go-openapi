@@ -23,10 +23,10 @@ package openapi
 //	      monster: 'https://gigantic-server.com/schemas/Monster/schema.json'
 type Discriminator struct {
 	// An object to hold mappings between payload values and schema names or references.
-	Mapping map[string]string `json:"mapping,omitempty" yaml:"mapping,omitempty"`
+	Mapping map[string]string `json:"mapping,omitempty"`
 	// REQUIRED.
 	// The name of the property in the payload that will hold the discriminator value.
-	PropertyName string `json:"propertyName" yaml:"propertyName"`
+	PropertyName string `json:"propertyName"`
 }
 
 func (o *Discriminator) validateSpec(location string, validator *Validator) []*validationError {

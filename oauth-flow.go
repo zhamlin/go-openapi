@@ -23,27 +23,27 @@ type OAuthFlow struct {
 	// The map MAY be empty.
 	//
 	// Applies To: oauth2
-	Scopes map[string]string `json:"scopes,omitempty" yaml:"scopes,omitempty"`
+	Scopes map[string]string `json:"scopes,omitempty"`
 	// REQUIRED.
 	// The authorization URL to be used for this flow.
 	// This MUST be in the form of a URL.
 	// The OAuth2 standard requires the use of TLS.
 	//
 	// Applies To:oauth2 ("implicit", "authorizationCode")
-	AuthorizationURL string `json:"authorizationUrl,omitempty" yaml:"authorizationUrl,omitempty"`
+	AuthorizationURL string `json:"authorizationUrl,omitempty"`
 	// REQUIRED.
 	// The token URL to be used for this flow.
 	// This MUST be in the form of a URL.
 	// The OAuth2 standard requires the use of TLS.
 	//
 	// Applies To: oauth2 ("password", "clientCredentials", "authorizationCode")
-	TokenURL string `json:"tokenUrl,omitempty" yaml:"tokenUrl,omitempty"`
+	TokenURL string `json:"tokenUrl,omitempty"`
 	// The URL to be used for obtaining refresh tokens.
 	// This MUST be in the form of a URL.
 	// The OAuth2 standard requires the use of TLS.
 	//
 	// Applies To: oauth2
-	RefreshURL string `json:"refreshUrl,omitempty" yaml:"refreshUrl,omitempty"`
+	RefreshURL string `json:"refreshUrl,omitempty"`
 }
 
 func (o *OAuthFlow) validateSpec(path string, validator *Validator) []*validationError {

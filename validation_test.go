@@ -7,7 +7,6 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"gopkg.in/yaml.v3"
 
 	"github.com/sv-tools/openapi"
 )
@@ -26,11 +25,6 @@ func TestValidator_ValidateSpec(t *testing.T) {
 			require.NoError(t, err)
 			var o *openapi.Extendable[openapi.OpenAPI]
 			switch path.Ext(name) {
-			case ".yaml":
-				require.NoError(t, yaml.Unmarshal(data, &o))
-				newData, err := yaml.Marshal(&o)
-				require.NoError(t, err)
-				require.YAMLEq(t, string(data), string(newData))
 			case ".json":
 				require.NoError(t, json.Unmarshal(data, &o))
 				newData, err := json.Marshal(&o)

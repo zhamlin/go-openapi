@@ -21,15 +21,15 @@ package openapi
 //	      read:pets: read your pets
 type OAuthFlows struct {
 	// Configuration for the OAuth Implicit flow.
-	Implicit *Extendable[OAuthFlow] `json:"implicit,omitempty" yaml:"implicit,omitempty"`
+	Implicit *Extendable[OAuthFlow] `json:"implicit,omitempty"`
 	// Configuration for the OAuth Resource Owner Password flow.
-	Password *Extendable[OAuthFlow] `json:"password,omitempty" yaml:"password,omitempty"`
+	Password *Extendable[OAuthFlow] `json:"password,omitempty"`
 	// Configuration for the OAuth Client Credentials flow.
 	// Previously called application in OpenAPI 2.0.
-	ClientCredentials *Extendable[OAuthFlow] `json:"clientCredentials,omitempty" yaml:"clientCredentials,omitempty"`
+	ClientCredentials *Extendable[OAuthFlow] `json:"clientCredentials,omitempty"`
 	// Configuration for the OAuth Authorization Code flow.
 	// Previously called accessCode in OpenAPI 2.0.
-	AuthorizationCode *Extendable[OAuthFlow] `json:"authorizationCode,omitempty" yaml:"authorizationCode,omitempty"`
+	AuthorizationCode *Extendable[OAuthFlow] `json:"authorizationCode,omitempty"`
 }
 
 func (o *OAuthFlows) validateSpec(location string, validator *Validator) []*validationError {

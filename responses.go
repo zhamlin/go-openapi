@@ -3,8 +3,6 @@ package openapi
 import (
 	"encoding/json"
 	"regexp"
-
-	"gopkg.in/yaml.v3"
 )
 
 var ResponseCodePattern = regexp.MustCompile(`^[1-5](?:\d{2}|XX)$`)
@@ -36,7 +34,7 @@ var ResponseCodePattern = regexp.MustCompile(`^[1-5](?:\d{2}|XX)$`)
 type Responses struct {
 	// The documentation of responses other than the ones declared for specific HTTP response codes.
 	// Use this field to cover undeclared responses.
-	Default *RefOrSpec[Extendable[Response]] `json:"default,omitempty" yaml:"default,omitempty"`
+	Default *RefOrSpec[Extendable[Response]] `json:"default,omitempty"`
 	// Any HTTP status code can be used as the property name, but only one property per code,
 	// to describe the expected response for that HTTP status code.
 	// This field MUST be enclosed in quotation marks (for example, “200”) for compatibility between JSON and YAML.
@@ -44,7 +42,7 @@ type Responses struct {
 	// For example, 2XX represents all response codes between [200-299].
 	// Only the following range definitions are allowed: 1XX, 2XX, 3XX, 4XX, and 5XX.
 	// If a response is defined using an explicit code, the explicit code definition takes precedence over the range definition for that code.
-	Response map[string]*RefOrSpec[Extendable[Response]] `json:"-" yaml:"-"`
+	Response map[string]*RefOrSpec[Extendable[Response]] `json:"-"`
 }
 
 // MarshalJSON implements json.Marshaler interface.
@@ -88,49 +86,6 @@ func (o *Responses) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return json.Unmarshal(data, &o.Response)
-}
-
-// MarshalYAML implements yaml.Marshaler interface.
-func (o *Responses) MarshalYAML() (any, error) {
-	var raw map[string]any
-	data, err := yaml.Marshal(&o.Response)
-	if err != nil {
-		return nil, err
-	}
-	if err := yaml.Unmarshal(data, &raw); err != nil {
-		return nil, err
-	}
-
-	if o.Default != nil {
-		if raw == nil {
-			raw = make(map[string]any, 1)
-		}
-		raw["default"] = o.Default
-	}
-	return raw, nil
-}
-
-// UnmarshalYAML implements yaml.Unmarshaler interface.
-func (o *Responses) UnmarshalYAML(node *yaml.Node) error {
-	var raw map[string]any
-	if err := node.Decode(&raw); err != nil {
-		return err
-	}
-	if v, ok := raw["default"]; ok {
-		data, err := yaml.Marshal(&v)
-		if err != nil {
-			return err
-		}
-		if err := yaml.Unmarshal(data, &o.Default); err != nil {
-			return err
-		}
-		delete(raw, "default")
-	}
-	data, err := yaml.Marshal(&raw)
-	if err != nil {
-		return err
-	}
-	return yaml.Unmarshal(data, &o.Response)
 }
 
 func (o *Responses) validateSpec(location string, validator *Validator) []*validationError {
